@@ -1,6 +1,8 @@
-# import pandas as pd
-# import numpy as np
+import pandas as pd
+import numpy as np
 import matplotlib.pyplot as plt
+from pandas import DataFrame
+
 import CreateDataframe
 import plotly.graph_objects as go
 import plotly.express as px
@@ -57,7 +59,6 @@ def plot_correlation_plot(df, df_name, feature1, feature2, style, with_errors):
                                    yaxis_title=feature2)).show()
 
 
-
 def create_all_features_correlations(df, df_name):
     """
     Plots several 2-feature correlation graphs.
@@ -65,7 +66,7 @@ def create_all_features_correlations(df, df_name):
     (lines or dots, and error mode (True for error bars, False for no error bars)
     """
     lines, dots = 'lines+markers', 'markers'     # styles to choose from
-    plot_correlation_plot(df, df_name, "District", "Ward", dots, True)
+    plot_correlation_plot(df, df_name, "District", "Ward", dots, False)
 
 def plot_histogram_2(title, df):
     """
@@ -84,13 +85,9 @@ def plot_histogram_2(title, df):
         plt.ylabel("Number of samples")
         plt.show()
 
-
 if __name__ == "__main__":
-    original_full_p, train_p, validation_p, test_p = CreateDataframe.create_4_df_splits_processed()
-    # original_full_r, train_r, validation_r, test_r = CreateDataframe.create_4_df_splits_raw()
-    CreateDataframe.drop_task_1(train_p)
-    plot_histogram_2("bogel", train_p)
-    # plot_matrix_cor(train_p)
-
-    # create_label_histograms(original_full_p, train_p, validation_p, test_p)
-    # create_all_features_correlations(train_p, "Train dataset")
+    create_label_histograms(CreateDataframe.original_full_p,
+                            CreateDataframe.train_p,
+                            CreateDataframe.validation_p,
+                            CreateDataframe.test_p)
+    create_all_features_correlations(CreateDataframe.train_p, "Train dataset")
