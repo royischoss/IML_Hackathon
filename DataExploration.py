@@ -1,8 +1,10 @@
-# import pandas as pd
-# import numpy as np
+import pandas as pd
+import numpy as np
 import matplotlib.pyplot as plt
-import CreateDataframe
+from pandas import DataFrame
+import CreateDataframe as data
 import plotly.graph_objects as go
+import plotly.express as px
 
 
 def plot_histogram(title, df):
@@ -30,6 +32,13 @@ def create_label_histograms(original_full, train, validation, test):
     plot_histogram("Validation Dataset", validation["Primary Code"])
     plot_histogram("Test Dataset", test["Primary Code"])
 
+def plot_matrix_cor(df):
+
+    corr = df.corr()
+    fig = px.imshow(df.corr())
+    fig.show()
+
+
 
 def plot_correlation_plot(df, df_name, feature1, feature2, style, with_errors):
     """
@@ -49,19 +58,33 @@ def plot_correlation_plot(df, df_name, feature1, feature2, style, with_errors):
                                    yaxis_title=feature2)).show()
 
 
-
 def create_all_features_correlations(df, df_name):
     """
     Plots several 2-feature correlation graphs.
     To add a plot, call plot_correlation_plot with desired 2 features, style
     (lines or dots, and error mode (True for error bars, False for no error bars)
     """
-    lines, dots = 'lines+markers', 'markers'     # styles to choose from
-    plot_correlation_plot(df, df_name, "District", "Ward", dots, True)
+    lines, dots = 'lines+markers', 'markers'  # styles to choose from
+    plot_correlation_plot(df, df_name, "District", "Ward", dots, False)
 
+def plot_histogram_2(title, df):
+    """
+    Plots a histogram with 5 bins.
+    :param title: histogram title
+    :param df: dataframe to plot
+    """
+    for i in range(3):
+
+        ds = df[df["Hour Code"]==i]
+        fig, ax = plt.subplots()
+        ax.hist(x=ds["Primary Code"], histtype="bar", bins=[0, 1, 2, 3,4 ,5], width=0.5)
+        ax.set_xticks([0.3, 1.3, 2.3, 3.3, 4.3])
+        ax.set_xticklabels(CreateDataframe.crimes_dict.values(), rotation=10)
+        plt.title("Label Histogram (" + title + ")")
+        plt.ylabel("Number of samples")
+        plt.show()
 
 if __name__ == "__main__":
-    original_full_p, train_p, validation_p, test_p = CreateDataframe.create_4_df_splits_processed()
-    original_full_r, train_r, validation_r, test_r = CreateDataframe.create_4_df_splits_raw()
-    create_label_histograms(original_full_p, train_p, validation_p, test_p)
-    create_all_features_correlations(train_p, "Train dataset")
+    create_label_histograms(data.original_full_p, data.train_p,
+                            data.validation_p, data.test_p)
+    create_all_features_correlations(data.train_p, "Train dataset")
