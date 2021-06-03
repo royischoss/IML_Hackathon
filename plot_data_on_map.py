@@ -3,9 +3,18 @@ import pandas as pd
 import gmplot
 
 df = pd.read_csv('Dataset/train.csv')
+ps = pd.read_csv('Dataset/police_station.csv')
+
+
 df.dropna(inplace=True)
 gmapf = gmplot.GoogleMapPlotter(41.868397, -87.648281, 13)
 gmapf.apikey = "AIzaSyDeRNMnZ__VnQDiATiuz4kPjF_c9r1kWe8"
+
+ps_lat = ps["LATITUDE"]
+ps_lon = ps["LONGITUDE"]
+gmapf.scatter(ps_lat, ps_lon, color='blue', shape='x')
+
+
 
 df_th = df.loc[df["Primary Type"]=="THEFT"]
 df_bat = df.loc[df["Primary Type"]=="BATTERY"]
@@ -20,7 +29,7 @@ gmapf.scatter(th_lat, th_lon, color='red', marker=True)
 
 bat_lon = df_bat["Longitude"]
 bat_lat = df_bat["Latitude"]
-gmapf.scatter(bat_lat, bat_lon, color='blue', marker=True)
+gmapf.scatter(bat_lat, bat_lon, color='yellow', marker=True)
 
 ass_lon = df_ass["Longitude"]
 ass_lat = df_ass["Latitude"]

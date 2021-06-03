@@ -67,10 +67,30 @@ def create_all_features_correlations(df, df_name):
     lines, dots = 'lines+markers', 'markers'     # styles to choose from
     plot_correlation_plot(df, df_name, "District", "Ward", dots, True)
 
+def plot_histogram_2(title, df):
+    """
+    Plots a histogram with 5 bins.
+    :param title: histogram title
+    :param df: dataframe to plot
+    """
+    for i in range(3):
+
+        ds = df[df["Hour Code"]==i]
+        fig, ax = plt.subplots()
+        ax.hist(x=ds["Primary Code"], histtype="bar", bins=[0, 1, 2, 3,4 ,5], width=0.5)
+        ax.set_xticks([0.3, 1.3, 2.3, 3.3, 4.3])
+        ax.set_xticklabels(CreateDataframe.crimes_dict.values(), rotation=10)
+        plt.title("Label Histogram (" + title + ")")
+        plt.ylabel("Number of samples")
+        plt.show()
+
 
 if __name__ == "__main__":
     original_full_p, train_p, validation_p, test_p = CreateDataframe.create_4_df_splits_processed()
-    original_full_r, train_r, validation_r, test_r = CreateDataframe.create_4_df_splits_raw()
-    plot_matrix_cor(train_p)
+    # original_full_r, train_r, validation_r, test_r = CreateDataframe.create_4_df_splits_raw()
+    CreateDataframe.drop_task_1(train_p)
+    plot_histogram_2("bogel", train_p)
+    # plot_matrix_cor(train_p)
+
     # create_label_histograms(original_full_p, train_p, validation_p, test_p)
     # create_all_features_correlations(train_p, "Train dataset")
