@@ -64,7 +64,6 @@ def date_process(df):
     df['Date'] = ((df['Date'] - datetime(2021, 1, 1)).dt.total_seconds()) / (24 * 60 * 60)
 
 
-
 def dummies(df):
     mapping = {'TRUE': 1, 'FALSE': 0}
     df = pd.get_dummies(df, columns=['Location Description'])
@@ -74,6 +73,29 @@ def dummies(df):
     df['Domestic'] = df['Domestic'].astype(np.int32)
     return df
 
-
 def drop(df):
     df.drop(df.columns[df.columns.str.contains('unnamed', case=False)], axis=1, inplace=True)
+    df.drop('Primary Type', axis=1, inplace=True)
+
+
+def drop_task_1(df):
+    df.drop('IUCR', axis=1, inplace=True)
+    df.drop('Description', axis=1, inplace=True)
+    df.drop('FBI Code', axis=1, inplace=True)
+    df.drop('Updated On', axis=1, inplace=True)
+    
+    
+   
+def split_features_and_labels(df):
+    labels = df["Primary Code"]
+    features = df.drop(["Primary Code","Primary Type"],axis=1,inplace=False)
+    return features, labels
+
+
+# ready made datasets, access via import
+original_full_p, train_p, validation_p, test_p = create_4_df_splits_processed()
+original_full_r, train_r, validation_r, test_r = create_4_df_splits_raw()
+
+train_p_features, train_p_labels = split_features_and_labels(train_p)
+validation_p_features, validation_p_labels = split_features_and_labels(validation_p)
+test_p_features, test_p_labels = split_features_and_labels(test_p)
