@@ -59,12 +59,18 @@ def add_primary_code_col(df):
 
 
 def date_process(df):
+    """
+    Processes dates into relative variables.
+    """
     df['Date'] = pd.to_datetime(df['Date'], errors='coerce')
     df['day_of_week'] = df['Date'].dt.day_name()
     df['Date'] = ((df['Date'] - datetime(2021, 1, 1)).dt.total_seconds()) / (24 * 60 * 60)
 
 
 def dummies(df):
+    """
+    Creates dummy variables.
+    """
     mapping = {'TRUE': 1, 'FALSE': 0}
     df = pd.get_dummies(df, columns=['Location Description'])
     df = pd.get_dummies(df, columns=['day_of_week'])
@@ -73,22 +79,31 @@ def dummies(df):
     df['Domestic'] = df['Domestic'].astype(np.int32)
     return df
 
+
 def drop(df):
+    """
+    Drops unnecessary columns.
+    """
     df.drop(df.columns[df.columns.str.contains('unnamed', case=False)], axis=1, inplace=True)
     df.drop('Primary Type', axis=1, inplace=True)
 
 
 def drop_task_1(df):
+    """
+    Drops unnecessary columns.
+    """
     df.drop('IUCR', axis=1, inplace=True)
     df.drop('Description', axis=1, inplace=True)
     df.drop('FBI Code', axis=1, inplace=True)
     df.drop('Updated On', axis=1, inplace=True)
-    
-    
-   
+
+
 def split_features_and_labels(df):
+    """
+    Splits the data to features and labels.
+    """
     labels = df["Primary Code"]
-    features = df.drop(["Primary Code","Primary Type"],axis=1,inplace=False)
+    features = df.drop(["Primary Code"], axis=1, inplace=False)
     return features, labels
 
 
