@@ -169,6 +169,18 @@ def drop(df):
     df.drop('Location', axis=1, inplace=True)
     df.dropna(inplace=True)
 
+
+def date_process_task_2(df):
+    df['minute'] = df['Date'].dt.minute
+
+    conditions = []
+    for i in range(24):
+        conditions.append(((df["hour"] == i) & (df["minute"] <= 30)))
+        conditions.append(((df["hour"] == i) & (df["minute"] > 30)))
+
+    values = [i for i in range(48)]
+    df["minute Code"] = np.select(conditions, values)
+
 def drop_task_1(df):
     """
     Drops unnecessary columns.
@@ -195,3 +207,4 @@ original_full_r, train_r, validation_r, test_r = create_4_df_splits_raw()
 train_p_features, train_p_labels = split_features_and_labels(train_p)
 validation_p_features, validation_p_labels = split_features_and_labels(validation_p)
 test_p_features, test_p_labels = split_features_and_labels(test_p)
+
