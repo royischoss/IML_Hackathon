@@ -28,7 +28,7 @@ def plot_label_histograms(original_full, train, validation, test):
     plot_histogram("Validation Dataset", validation["Primary Code"])
     plot_histogram("Test Dataset", test["Primary Code"])
 
-def matrix_cor():
+def matrix_cor(df):
     pass
 
 
