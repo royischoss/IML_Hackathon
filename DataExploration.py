@@ -31,23 +31,33 @@ def create_label_histograms(original_full, train, validation, test):
     plot_histogram("Test Dataset", test["Primary Code"])
 
 
-def plot_correlation_plot(df, df_name, feature1, feature2, mode):
+def plot_correlation_plot(df, df_name, feature1, feature2, style, with_errors):
     """
     Plots one graph of 2-feature correlation.
+    :param style: 'lines+markers' or 'markers'
+    :param with_errors: True for error bars, False for no error bars
     """
     my_title = df_name + " - Correlation between " + feature1 + " and " + feature2
-    go.Figure([go.Scatter(x=df[feature1], y=df[feature2], mode=mode)],
-              layout=go.Layout(title=my_title, xaxis_title=feature1,
-                               yaxis_title=feature2)).show()
+    if with_errors:
+        go.Figure([go.Scatter(x=df[feature1], y=df[feature2], mode=style,
+                              error_y=dict(type='percent', value=50, visible=True))],
+                  layout=go.Layout(title=my_title, xaxis_title=feature1,
+                                   yaxis_title=feature2)).show()
+    else:
+        go.Figure([go.Scatter(x=df[feature1], y=df[feature2], mode=style)],
+                  layout=go.Layout(title=my_title, xaxis_title=feature1,
+                                   yaxis_title=feature2)).show()
+
 
 
 def create_all_features_correlations(df, df_name):
     """
     Plots several 2-feature correlation graphs.
-    To add a plot, call plot_correlation_plot with desired 2 features and mode
+    To add a plot, call plot_correlation_plot with desired 2 features, style
+    (lines or dots, and error mode (True for error bars, False for no error bars)
     """
-    lines, dots = 'lines+markers', 'markers'     # modes to choose from
-    plot_correlation_plot(df, df_name, "District", "Ward", dots)
+    lines, dots = 'lines+markers', 'markers'     # styles to choose from
+    plot_correlation_plot(df, df_name, "District", "Ward", dots, True)
 
 
 if __name__ == "__main__":
