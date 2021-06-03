@@ -75,11 +75,11 @@ def dummies(df):
 
 def drop(df):
     df.drop(df.columns[df.columns.str.contains('unnamed', case=False)], axis=1, inplace=True)
-    df.drop('Primary Type', axis=1)
+    df.drop('Primary Type', axis=1, inplace=True)
 
 
 def drop_task_1(df):
-    df.drop('IUCR', axis=1)
-    df.drop('Description', axis=1)
-    df.drop('FBI Code', axis=1)
-    df.drop('Updated On', axis=1)
+    df.drop('IUCR', axis=1, inplace=True)
+    df.drop('Description', axis=1, inplace=True)
+    df.drop('FBI Code', axis=1, inplace=True)
+    df.drop('Updated On', axis=1, inplace=True)
