@@ -26,6 +26,6 @@ def date_process(df):
 if __name__ == '__main__':
     # df = pd.read_csv(DATA_PATH_TRAIN)
     df = CD.preprocess_data("Dataset/train.csv")
-    df.to_csv('Dataset/train_2.csv')
+    df.to_csv('Dataset/train_4.csv')
 
 
