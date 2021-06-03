@@ -30,14 +30,22 @@ def create_label_histograms(original_full, train, validation, test):
     plot_histogram("Test Dataset", test["Primary Code"])
 
 
-def create_correlation_plot(df):
+def plot_correlation_plot(df, feature1, feature2):
     """
-    Plots
-    :param df:
-    :return:
+    Plots one graph of 2-feature correlation
     """
+    pass
+
+
+def create_all_features_correlations(df):
+    """
+    Plots several 2-feature correlation graphs.
+    """
+    pass
 
 
 if __name__ == "__main__":
-    original_full, train, validation, test = CreateDataframe.create_4_df_splits_processed()
-    create_label_histograms(original_full, train, validation, test)
+    original_full_p, train_p, validation_p, test_p = CreateDataframe.create_4_df_splits_processed()
+    original_full_r, train_r, validation_r, test_r = CreateDataframe.create_4_df_splits_raw()
+    create_label_histograms(original_full_p, train_p, validation_p, test_p)
+    create_all_features_correlations(train_p)
