@@ -64,7 +64,6 @@ def date_process(df):
     df['Date'] = ((df['Date'] - datetime(2021, 1, 1)).dt.total_seconds()) / (24 * 60 * 60)
 
 
-
 def dummies(df):
     mapping = {'TRUE': 1, 'FALSE': 0}
     df = pd.get_dummies(df, columns=['Location Description'])
@@ -74,6 +73,13 @@ def dummies(df):
     df['Domestic'] = df['Domestic'].astype(np.int32)
     return df
 
-
 def drop(df):
     df.drop(df.columns[df.columns.str.contains('unnamed', case=False)], axis=1, inplace=True)
+    df.drop('Primary Type')
+
+
+def drop_task_1(df):
+    df.drop('IUCR')
+    df.drop('Description')
+    df.drop('FBI Code')
+    df.drop('Updated On')
