@@ -2,8 +2,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from pandas import DataFrame
-
-import CreateDataframe
+import CreateDataframe as data
 import plotly.graph_objects as go
 import plotly.express as px
 
@@ -65,7 +64,7 @@ def create_all_features_correlations(df, df_name):
     To add a plot, call plot_correlation_plot with desired 2 features, style
     (lines or dots, and error mode (True for error bars, False for no error bars)
     """
-    lines, dots = 'lines+markers', 'markers'     # styles to choose from
+    lines, dots = 'lines+markers', 'markers'  # styles to choose from
     plot_correlation_plot(df, df_name, "District", "Ward", dots, False)
 
 def plot_histogram_2(title, df):
@@ -86,8 +85,6 @@ def plot_histogram_2(title, df):
         plt.show()
 
 if __name__ == "__main__":
-    create_label_histograms(CreateDataframe.original_full_p,
-                            CreateDataframe.train_p,
-                            CreateDataframe.validation_p,
-                            CreateDataframe.test_p)
-    create_all_features_correlations(CreateDataframe.train_p, "Train dataset")
+    create_label_histograms(data.original_full_p, data.train_p,
+                            data.validation_p, data.test_p)
+    create_all_features_correlations(data.train_p, "Train dataset")
