@@ -165,6 +165,9 @@ def drop(df):
     df.drop('hour', axis=1, inplace=True)
     df.drop('Case Number', axis=1, inplace=True)
     df.drop('Updated On', axis=1, inplace=True)
+    df.drop('Block', axis=1, inplace=True)
+    df.drop('Location', axis=1, inplace=True)
+    df.dropna(inplace=True)
 
 def drop_task_1(df):
     """
