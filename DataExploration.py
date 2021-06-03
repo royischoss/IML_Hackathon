@@ -14,11 +14,12 @@ def plot_histogram(title, df):
     ax.hist(x=df, histtype="bar", bins=[0, 1, 2, 3, 4, 5], width=0.5)
     ax.set_xticks([0.3, 1.3, 2.3, 3.3, 4.3])
     ax.set_xticklabels(CreateDataframe.crimes_dict.values(), rotation=10)
-    plt.title(title)
+    plt.title("Label Histogram (" + title + ")")
+    plt.ylabel("Number of samples")
     plt.show()
 
 
-def plot_label_histograms(original_full, train, validation, test):
+def create_label_histograms(original_full, train, validation, test):
     """
     Plots 4 label histograms of different splits of the data (All of it, train,
     validation, test)
@@ -29,6 +30,14 @@ def plot_label_histograms(original_full, train, validation, test):
     plot_histogram("Test Dataset", test["Primary Code"])
 
 
+def create_correlation_plot(df):
+    """
+    Plots
+    :param df:
+    :return:
+    """
+
+
 if __name__ == "__main__":
-    original_full, train, validation, test = CreateDataframe.create_4_df_splits()
-    plot_label_histograms(original_full, train, validation, test)
+    original_full, train, validation, test = CreateDataframe.create_4_df_splits_processed()
+    create_label_histograms(original_full, train, validation, test)

@@ -5,14 +5,27 @@ crimes_dict = {0: 'BATTERY', 1: 'THEFT', 2: 'CRIMINAL DAMAGE',
                3: 'DECEPTIVE PRACTICE', 4: 'ASSAULT'}
 
 
-def create_4_df_splits():
+def create_4_df_splits_processed():
     """
     Creates and returns 4 data splits (original_full, train, validation, test)
+    after preprocessing
     """
     original_full = preprocess_data("Dataset/dataset_crimes.csv")
     train = preprocess_data("Dataset/train.csv")
-    validation = preprocess_data("Dataset/validation.csv")
+    validation = preprocess_data("Dataset/validate.csv")
     test = preprocess_data("Dataset/test.csv")
+    return original_full, train, validation, test
+
+
+def create_4_df_splits_raw():
+    """
+    Creates and returns 4 data splits (original_full, train, validation, test)
+    using raw data *without* preprocessing
+    """
+    original_full = pd.read_csv("Dataset/dataset_crimes.csv", index_col=0)
+    train = pd.read_csv("Dataset/train.csv", index_col=0)
+    validation = pd.read_csv("Dataset/validate.csv", index_col=0)
+    test = pd.read_csv("Dataset/test.csv", index_col=0)
     return original_full, train, validation, test
 
 
