@@ -3,6 +3,7 @@
 import matplotlib.pyplot as plt
 import CreateDataframe
 import plotly.graph_objects as go
+import plotly.express as px
 
 
 def plot_histogram(title, df):
@@ -31,10 +32,10 @@ def create_label_histograms(original_full, train, validation, test):
     plot_histogram("Test Dataset", test["Primary Code"])
 
 def plot_matrix_cor(df):
-    """
-    assumes raw df after catagoring data
-    :param df:
-    """
+
+    corr = df.corr()
+    fig = px.imshow(df.corr())
+    fig.show()
 
 
 
@@ -70,5 +71,6 @@ def create_all_features_correlations(df, df_name):
 if __name__ == "__main__":
     original_full_p, train_p, validation_p, test_p = CreateDataframe.create_4_df_splits_processed()
     original_full_r, train_r, validation_r, test_r = CreateDataframe.create_4_df_splits_raw()
-    create_label_histograms(original_full_p, train_p, validation_p, test_p)
-    create_all_features_correlations(train_p, "Train dataset")
+    plot_matrix_cor(train_p)
+    # create_label_histograms(original_full_p, train_p, validation_p, test_p)
+    # create_all_features_correlations(train_p, "Train dataset")
