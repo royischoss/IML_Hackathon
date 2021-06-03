@@ -39,7 +39,7 @@ for model in models:
 
 # print predicted accuracy on validation data
 for i,model in enumerate(models):
-    accuracy = model.score(validation_features, validation_labels)
+    accuracy = "{:.3f}".format(model.score(validation_features, validation_labels))
     print("Accuracy for " + models_names[i] + ": " + str(accuracy))
 
 
