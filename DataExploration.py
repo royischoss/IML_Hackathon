@@ -2,6 +2,7 @@
 # import numpy as np
 import matplotlib.pyplot as plt
 import CreateDataframe
+import plotly.graph_objects as go
 
 
 def plot_histogram(title, df):
@@ -37,22 +38,27 @@ def plot_matrix_cor(df):
 
 
 
-def plot_correlation_plot(df, feature1, feature2):
+def plot_correlation_plot(df, df_name, feature1, feature2, mode):
     """
-    Plots one graph of 2-feature correlation
+    Plots one graph of 2-feature correlation.
     """
-    pass
+    my_title = df_name + " - Correlation between " + feature1 + " and " + feature2
+    go.Figure([go.Scatter(x=df[feature1], y=df[feature2], mode=mode)],
+              layout=go.Layout(title=my_title, xaxis_title=feature1,
+                               yaxis_title=feature2)).show()
 
 
-def create_all_features_correlations(df):
+def create_all_features_correlations(df, df_name):
     """
     Plots several 2-feature correlation graphs.
+    To add a plot, call plot_correlation_plot with desired 2 features and mode
     """
-    pass
+    lines, dots = 'lines+markers', 'markers'     # modes to choose from
+    plot_correlation_plot(df, df_name, "District", "Ward", dots)
 
 
 if __name__ == "__main__":
     original_full_p, train_p, validation_p, test_p = CreateDataframe.create_4_df_splits_processed()
     original_full_r, train_r, validation_r, test_r = CreateDataframe.create_4_df_splits_raw()
     create_label_histograms(original_full_p, train_p, validation_p, test_p)
-    create_all_features_correlations(train_p)
+    create_all_features_correlations(train_p, "Train dataset")
