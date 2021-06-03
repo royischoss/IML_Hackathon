@@ -29,8 +29,12 @@ def create_label_histograms(original_full, train, validation, test):
     plot_histogram("Validation Dataset", validation["Primary Code"])
     plot_histogram("Test Dataset", test["Primary Code"])
 
-def matrix_cor(df):
-    pass
+def plot_matrix_cor(df):
+    """
+    assumes raw df after catagoring data
+    :param df:
+    """
+
 
 
 def plot_correlation_plot(df, feature1, feature2):
