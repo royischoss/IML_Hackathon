@@ -77,3 +77,15 @@ def dummies(df):
 
 def drop(df):
     df.drop(df.columns[df.columns.str.contains('unnamed', case=False)], axis=1, inplace=True)
+
+
+def date_process_task_2(df):
+    df['minute'] = df['Date'].dt.minute
+
+    conditions = []
+    for i in range(24):
+        conditions.append(((df["hour"] == i) & (df["minute"] <= 30)))
+        conditions.append(((df["hour"] == i) & (df["minute"] > 30)))
+
+    values = [i for i in range(48)]
+    df["minute Code"] = np.select(conditions, values)
