@@ -76,7 +76,17 @@ def dummies(df):
 
 
 def drop(df):
+    """
+    Drops unnecessary columns.
+    """
     df.drop(df.columns[df.columns.str.contains('unnamed', case=False)], axis=1, inplace=True)
+    df.drop('Primary Type', axis=1, inplace=True)
+    df.drop('hour', axis=1, inplace=True)
+    df.drop('Case Number', axis=1, inplace=True)
+    df.drop('Updated On', axis=1, inplace=True)
+    df.drop('Block', axis=1, inplace=True)
+    df.drop('Location', axis=1, inplace=True)
+    df.dropna(inplace=True)
 
 
 def date_process_task_2(df):
