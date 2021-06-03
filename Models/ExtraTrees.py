@@ -1,7 +1,7 @@
-# Model: Random forest
+# Model: Extra forests
 
 import IML_Hackathon2021.CreateDataframe as data
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import ExtraTreesClassifier
 
 # Hyper parameters
 ESTIMATOR_NUM = 100
@@ -14,10 +14,10 @@ validation_features = data.validation_p_features
 validation_labels = data.validation_p_labels
 
 # Train
-RandomForest= RandomForestClassifier(n_estimators=ESTIMATOR_NUM, max_depth=MAX_DEPTH)
-RandomForest.fit(train_features, train_labels)
+Trees = ExtraTreesClassifier(n_estimators=ESTIMATOR_NUM, max_depth=MAX_DEPTH)
+Trees.fit(train_features, train_labels)
 
 # Predict (using validation data)
-prediction = RandomForest.predict(validation_features)
+prediction = Trees.predict(validation_features)
 print(prediction)
-print(RandomForest.score(validation_features,validation_labels))
+print(Trees.score(validation_features, validation_labels))
