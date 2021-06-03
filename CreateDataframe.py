@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+from _datetime import datetime
 
 crimes_dict = {0: 'BATTERY', 1: 'THEFT', 2: 'CRIMINAL DAMAGE',
                3: 'DECEPTIVE PRACTICE', 4: 'ASSAULT'}
@@ -36,6 +37,9 @@ def preprocess_data(path):
     """
     df = pd.read_csv(path, index_col=0)
     add_primary_code_col(df)
+    date_process(df)
+    df = dummies(df)
+    drop(df)
     return df
 
 
@@ -52,3 +56,24 @@ def add_primary_code_col(df):
     ]
     values = crimes_dict.keys()
     df["Primary Code"] = np.select(conditions, values)
+
+
+def date_process(df):
+    df['Date'] = pd.to_datetime(df['Date'], errors='coerce')
+    df['day_of_week'] = df['Date'].dt.day_name()
+    df['Date'] = ((df['Date'] - datetime(2021, 1, 1)).dt.total_seconds()) / (24 * 60 * 60)
+
+
+
+def dummies(df):
+    mapping = {'TRUE': 1, 'FALSE': 0}
+    df = pd.get_dummies(df, columns=['Location Description'])
+    df = pd.get_dummies(df, columns=['day_of_week'])
+    df.replace({'TRUE': mapping, 'FALSE': mapping})
+    df['Arrest'] = df['Arrest'].astype(np.int32)
+    df['Domestic'] = df['Domestic'].astype(np.int32)
+    return df
+
+
+def drop(df):
+    df.drop(df.columns[df.columns.str.contains('unnamed', case=False)], axis=1, inplace=True)
